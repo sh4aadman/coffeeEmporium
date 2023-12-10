@@ -13,7 +13,7 @@ const Hero = () => {
             nostalgia back!! Your companion of every moment!!! Enjoy the
             beautiful moments and make them memorable.
           </p>
-          <button className="font-rancho text-2xl bg-[#E3B577] py-2 px-6 text-[#242222]">Learn More</button>
+          <button className="font-rancho text-2xl bg-[#E3B577] py-2 px-6 text-[#242222] border border-[#E3B577] hover:bg-transparent hover:text-white hover:border-white">Learn More</button>
         </div>
       </div>
     </div>
