@@ -5,7 +5,18 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        'rancho': 'Rancho, cursive',
+        'raleway': 'Raleway, sans-serif'
+      },
+      backgroundImage: {
+        'header': 'url(/src/assets/header.jpg)',
+        'hero': 'url(/src/assets/hero.png)',
+        'footerDetails': 'url(/src/assets/footerDetails.jpg)',
+        'footer': 'url(/src/assets/footer.jpg)'
+      }
+    },
   },
   plugins: [require("daisyui")],
 }
