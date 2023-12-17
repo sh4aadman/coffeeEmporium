@@ -1,25 +1,57 @@
 import { IoIosArrowBack } from "react-icons/io";
-import { Link } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const UpdateCoffee = () => {
+  const coffee = useLoaderData();
 
-    const handleSubmit = event => {
-        event.preventDefault();
+  const { _id, name, supplier, category, chef, taste, details, photo } = coffee;
 
-        const form = event.target;
+  const handleSubmit = (event) => {
+    event.preventDefault();
 
-        const name = form.name.value;
-        const supplier = form.supplier.value;
-        const category = form.category.value;
-        const chef = form.chef.value;
-        const taste = form.taste.value;
-        const details = form.details.value;
-        const photo = form.photo.value;
+    const form = event.target;
 
-        const newCoffee = {name,supplier, category, chef, taste, details, photo};
+    const name = form.name.value;
+    const supplier = form.supplier.value;
+    const category = form.category.value;
+    const chef = form.chef.value;
+    const taste = form.taste.value;
+    const details = form.details.value;
+    const photo = form.photo.value;
 
-        console.log(newCoffee)
-    }
+    const newCoffee = { name, supplier, category, chef, taste, details, photo };
+
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, update it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`http://localhost:5000/update/${_id}`, {
+          method: "PUT",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(newCoffee),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.acknowledged) {
+              Swal.fire({
+                title: "Updated!",
+                text: "Your Coffee has been updated.",
+                icon: "success",
+              });
+            }
+          });
+      }
+    });
+  };
 
   return (
     <div className="min-h-screen bg-add bg-no-repeat">
@@ -49,6 +81,7 @@ const UpdateCoffee = () => {
                   id=""
                   placeholder="Enter coffee name"
                   className="mt-4 w-full p-3 rounded-md"
+                  defaultValue={name}
                 />
               </div>
               <div>
@@ -59,6 +92,7 @@ const UpdateCoffee = () => {
                   id=""
                   placeholder="Enter coffee supplier"
                   className="mt-4 w-full p-3 rounded-md"
+                  defaultValue={supplier}
                 />
               </div>
               <div>
@@ -69,6 +103,7 @@ const UpdateCoffee = () => {
                   id=""
                   placeholder="Enter coffee category"
                   className="mt-4 w-full p-3 rounded-md"
+                  defaultValue={category}
                 />
               </div>
             </div>
@@ -81,6 +116,7 @@ const UpdateCoffee = () => {
                   id=""
                   placeholder="Enter chef name"
                   className="mt-4 w-full p-3 rounded-md"
+                  defaultValue={chef}
                 />
               </div>
               <div>
@@ -91,6 +127,7 @@ const UpdateCoffee = () => {
                   id=""
                   placeholder="Enter coffee taste"
                   className="mt-4 w-full p-3 rounded-md"
+                  defaultValue={taste}
                 />
               </div>
               <div>
@@ -101,6 +138,7 @@ const UpdateCoffee = () => {
                   id=""
                   placeholder="Enter coffee details"
                   className="mt-4 w-full p-3 rounded-md"
+                  defaultValue={details}
                 />
               </div>
             </div>
@@ -113,6 +151,7 @@ const UpdateCoffee = () => {
               id=""
               placeholder="Enter photo URL"
               className="mt-4 w-full p-3 rounded-md"
+              defaultValue={photo}
             />
           </div>
           <div className="flex justify-center">
